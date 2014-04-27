@@ -1,0 +1,40 @@
+.square{
+	display: block;
+	width: 80px;
+	height: 80px;
+	background: #dddddd;
+	position: absolute;
+        text-align:center;
+}
+
+#container{
+    margin-top: 1em;
+	margin-bottom: 5em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#hover-menu{
+        position: fixed;
+        right:0;
+        bottom:0;
+        height: 18em;
+        width: 18em;
+        border-style: solid;
+        border-width: 2px;
+        padding: 6px;
+        opacity:0.6;
+}
+
+.hover-menu-heading {
+	margin-top: 6px;
+	margin-bottom: 0px;
+
+}
+
+.hover-menu-level {
+	margin-top: 6px;
+	margin-bottom: 0px;
+
+}
+

@@ -1,0 +1,21 @@
+# File extensions
+*.pyc
+*.pyc~
+*.py~
+.gitignore~
+*~
+*.json
+*.xml
+.idea
+*.log
+*.save
+*.json
+*.xml
+*.swp
+
+
+
+# Directories
+build
+venv
+Hourglass_demo

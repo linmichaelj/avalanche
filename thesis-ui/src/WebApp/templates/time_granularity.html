@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block head %}
+  <link href="/static/time_granularity.css" rel="stylesheet">
+  <script type="text/javascript" src="/static/time_granularity.js"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<h2>Define Logical Topology</h2>
+
+<div class="topology_input">
+
+  <form role="form" action="time_granularity_submit" method="get">
+    <div class="form-group">
+      <label for="dynamic">Start Day</label>
+      <input type="text" class="form-control" name="dynamic" id="dynamic" placeholder="Enter 1 for static case, and 2 or more for dynamic">
+    </div>
+
+    <div class="form-group">
+      <label for="totalTimeSpan">Total Time Span</label>
+      <input type="text" class="form-control" name="total" id="totalTimeSpan" placeholder="Enter an integer">
+    </div>
+
+    <div class="topology-levels">
+      <div class="form-group">
+        <label for="level0">Level 0 Granularity</label>
+        <input type="text" class="form-control" name="l0" id="level0" placeholder="Must be 1">
+      </div>
+    </div>
+
+    <div class="control-buttons">
+      <button type="button" class="btn btn-default add-level" onclick="add_level();">Add more levels</button>
+
+      <button type="submit" class="btn btn-default submit-granularity">Submit</button>
+    </div>
+
+  </form>
+
+</div>
+
+{% endblock %}

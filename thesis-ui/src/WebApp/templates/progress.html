@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block head %}
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="/static/jquery.jsPlumb-1.5.3-min.js"></script>
+        <script type="text/javascript" src="/static/Chart.js"></script>
+        <script type="text/javascript" src="/static/progress.js"></script>
+	    <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/static/logical.css">
+{% endblock %}
+
+{% block content %}
+
+
+    <div id="container">
+    </div>
+
+    <div id ="accept"> </div>
+
+     <div id="search-menu">
+        <form role="form" action="search" method="get">
+            <div class="form-group">
+                <label for="search-text">Task ID</label>
+                <input type="text" class="form-control" name="search-text" id="search-text" placeholder="Enter a task ID">
+            </div>
+
+            <div class="control-buttons">
+                <button type="submit" class="btn btn-default submit-search">Search</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div id="menu">
+        <input id="run-button" type="submit" class="btn btn-primary" value="Start" onClick="system_run()">
+        <div id="hover-menu">
+
+        </div>
+    </div>
+
+{% endblock  %}

@@ -1,0 +1,10 @@
+RainCatcher.*
+*.log 
+*.tex~
+*.aux
+*.toc
+*.fdb_latexmk
+.idea
+*.save
+Avalanche.log
+.DS_Store

@@ -1,0 +1,15 @@
+.idea/
+Core-Test/
+level-db2/
+level-db3/
+lib/
+src/META-INF
+TaskOutputDB/
+out/
+*.iml
+*.DS_STORE
+raw-data/
+config.properties
+UI-config
+*~
+*.backup

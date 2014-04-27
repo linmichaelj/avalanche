@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block head %}
+    <script type="text/javascript" src="/static/admin.js"></script>
+    <link href="/static/admin.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<h1>Admin Control Panel</h1>
+<h2>Configure Alias</h2>
+
+<ul class="nav nav-tabs" id="mytab">
+    <li class="active"><a href="#machine">Machine</a></li>
+    <li><a href="#program" >Program</a></li>
+    <li><a href="#Configs">Configs</a></li>
+    <li><a href="#data" >Data</a></li>
+</ul>
+
+<div id="content" class="tab-content">
+    <div class="tab-pane active alias-tab" id="machine">
+        <table class="table table-striped">
+            <tr>
+                <th>Machine Alias</th>
+                <th>IP Address</th>
+                <th>DB Port</th>
+                <th>Ram Port</th>
+                <th>File Port</th>
+                <th></th>
+            </tr>
+            {% for machine in machines: %}
+            <tr>
+                {% for key in machine.keys(): %}
+                 <td>{{machine[key]}}</td>
+                {% endfor %}
+                <td style="padding: 1px; width: 1px">
+                    <button type="button" class = "btn btn-danger alias-delete-button" onclick="delete_alias('{{machine['alias']}}')">X</button>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+        <form class="form-inline alias-form machine-form" role="form" action="/machine_alias_submit">
+            <button type="button" class = "btn btn-primary alias-button machine-save-button" onclick="machine_submit();">Save</button>
+        </form>
+
+        <button type="button" class = "btn btn-primary alias-button" onclick="load_add_machine();">Add Alias</button>
+
+
+    </div>
+    <div class="tab-pane alias-tab" id="program">
+        <div class="dropdown open">
+            <button class ="btn"  style = "margin: 10px;" id="drop4" role="button" data-toggle="dropdown" href="#"> Select Program <b class="caret"></b></button>
+            <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
+                {% for key in programs.keys(): %}
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="display_program('{{key}}')">{{key}}</a></li>
+                {% endfor %}
+                {%if program_count > 0: %}
+                <li role="presentation" class="divider"></li>
+                {% endif %}
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="load_add_program()">Add New Program</a></li>
+            </ul>
+        </div>
+
+        <div class="program" id="add_program">
+            <form class="form-inline alias-form prog-form" role="form" action="/program_alias_submit">
+                <div class="pair-input form-group" style="display:block"><input type="text" name="Program Alias" class="form-control" placeholder="Program Alias"></div>
+                <div class="pair-input form-group" style="display:block"><input type="text" name="Program Path" class="form-control" placeholder="Program Path"></div>
+                <div stye="display:block" id="prog-buttons">
+                <button type="button" class = "btn btn-primary prog-save-button" onclick="program_submit();">Save</button>
+                <button type="button" class = "btn btn-primary prog-button" onclick="load_add_program_pair();">Add Parameter</button>
+                </div>
+            </form>
+        </div>
+
+        {% for program in programs: %}
+        <div class="program" id="{{program}}">
+
+            <table class="table table-striped">
+                <tr>
+                    <th>Program Key</th>
+                    <th>Program Value</th>
+                    <th></th>
+                </tr>
+                {% for key in programs[program]: %}
+                <tr>
+                    <td>{{key}}</td>
+                    <td>{{programs[program][key]}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <button type="button" class = "btn btn-danger" onclick="delete_program('{{program}}')">Delete Program</button>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="tab-pane alias-tab" id="Configs">
+        <table class="table table-striped">
+            <tr>
+                <th>Global Key</th>
+                <th>Global Value</th>
+            </tr>
+            {% for key in global_pairs.keys(): %}
+            <tr>
+
+                <td>{{key}}</td>
+                <td>{{global_pairs[key]}}</td>
+                <td style="padding: 1px; width: 1px">
+                    <button type="button" class = "btn btn-danger alias-delete-button" onclick="delete_global('{{key}}')">X</button>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+        <form class="form-inline alias-form config-form" role="form" action="/config_alias_submit">
+            <div  style="display:block" id="config-buttons">
+                <button type="button" class = "btn btn-primary prog-save-button" onclick="config_submit();">Save</button>
+                <button type="button" class = "btn btn-primary prog-button" onclick="load_add_config_pair();">Add Parameter</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="tab-pane alias-tab" id="data">
+        Data
+    </div>
+</div>
+
+{% endblock %}

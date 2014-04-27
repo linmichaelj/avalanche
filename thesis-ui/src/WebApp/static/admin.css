@@ -1,0 +1,32 @@
+.alias-button{
+        float: right;
+        margin-top: 1em;
+        margin-right: 1em;
+}
+
+.alias-form{
+        width: 100%;
+
+}
+
+.alias-input{
+        width: 15%;
+        margin-right: 5%;
+        margin-bottom: 3%;
+}
+
+.pair-input{
+    width: 40%;
+    margin-right: 10px;
+}
+
+.pair-input input{
+
+    margin-bottom: 20px;
+}
+
+.input-row{
+        margin-bottom: 1em;
+        display: block;
+        width: 100%
+}

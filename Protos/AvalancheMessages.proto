@@ -1,0 +1,168 @@
+option java_package = "CommLayer.Messages";
+
+message Message{
+    enum MessageType {
+        BYE = 1;
+        TASK_INIT_MESSAGE = 2;
+        TASK_STATUS_MESSAGE = 3;
+        TASK_SET_STATE_MESSAGE = 4;
+
+        DATA_HANDLER_MESSAGE = 5;
+        DATA_MANAGER_MESSAGE = 6;
+
+        TOPOLOGY_MESSAGE = 7;
+        HEART_BEAT_MESSAGE = 8;
+        TOPOLOGY_STATUS_MESSAGE = 9;
+    }
+
+    message Location {
+      optional string host = 1;
+      optional int32 port = 2;
+    }
+
+    message TaskInitMessage {
+
+      enum TaskType {
+        BUILDER_TASK = 1;
+        MERGER_TASK = 2;
+        COPY_TASK = 3;
+      }
+
+      optional TaskType type = 1;
+      optional string id = 2;
+      repeated string dataSource = 3;
+      optional Location copyDestination = 4;
+    }
+
+    message TaskStatusMessage {
+      enum Status {
+        LOADING = 1;
+        READY = 2;
+        RUNNING = 3;
+        INTERRUPTED = 4;
+        RECOVERY = 5;
+        FINISHED = 6;
+      }
+
+      optional string id = 1;
+      optional Status status = 2;
+    }
+
+    message TaskSetStateMessage {
+      enum State{
+        RUN = 1;
+        PAUSE = 2;
+        RESUME = 3;
+      }
+      optional string id = 1;
+      optional State state = 3;
+    }
+
+    message DataHandlerMessage {
+      enum Type{
+        READ_REQ = 1;
+        WRITE = 2;
+        READ_RESPONSE = 5;
+      }
+
+      optional Type type = 1;
+      optional string taskId = 2;
+      repeated DataPair dataPayLoad = 3;
+      optional int32 readMinRange = 4;
+      optional int32 readMaxRange = 5;
+      optional MetaData metaData = 6;
+
+      message MetaData{
+        repeated DataPair dataPair = 1;
+        optional bool isComplete = 2;
+      }
+    }
+
+    message DataPair {
+      optional string key = 1;
+      optional string value = 2;
+    }
+
+    message DataManagerMessage {
+      enum Type{
+        DATA_REG = 1;
+        DATA_SOURCE_REQ = 2;
+        DATA_SOURCE_RESPONSE = 3;
+        DATA_COPY_REQ = 4;
+        DATA_COPY_RESPONSE = 5;
+      }
+
+      message DataRegMessage {
+        optional Location taskInitServiceLocation = 1;
+        optional Location dataHandlerServiceLocation = 2;
+        optional string taskId = 3;
+      }
+
+      message DataSourceRequestMessage {
+        optional string taskId = 1;
+      }
+
+      message DataSourceResponseMessage {
+        optional string taskId = 1;
+        repeated Location dataSource = 2;
+      }
+
+      message DataCopyRequestMessage {
+        optional Location dataHandlerServiceLocation = 1;
+        optional string taskId = 2;
+      }
+
+      message DataCopyResponseMessage {
+        optional string taskId = 1;
+      }
+
+      message DataCopyCompleteMessage {
+        optional string taskId = 1;
+        optional Location dataHandlerServiceLocation = 2;
+      }
+
+      optional Type type = 1;
+      optional DataRegMessage dataRegMessage = 2;
+      optional DataSourceRequestMessage dataSourceRequestMessage = 3;
+      optional DataSourceResponseMessage dataSourceResponseMessage = 4;
+      optional DataCopyRequestMessage dataCopyRequestMessage = 5;
+      optional DataCopyResponseMessage dataCopyResponseMessage = 6;
+    }
+
+    message TopologyMessage{
+      message Node {
+        optional string name = 1;
+        repeated string inputs = 2;
+      }
+
+      message BuilderNode {
+        optional string id = 1;
+        optional string path = 2;
+      }
+
+      optional string namespace = 1;
+      repeated string machines = 2;
+      repeated BuilderNode buildernodes = 3;
+      repeated Node nodes = 4;
+    }
+
+    message HeartBeatMessage {
+      optional int64 beatInterval = 1;
+    }
+
+
+    message TopologyStatusMessage {
+      repeated TaskStatusMessage taskStatuses = 1;
+    }
+
+    optional string senderId = 1;
+    optional MessageType messageType = 2;
+    optional TaskInitMessage taskInitMessage = 3;
+    optional TaskStatusMessage taskStatusMessage = 4;
+    optional TaskSetStateMessage taskSetStateMessage = 5;
+    optional DataHandlerMessage dataHandlerMessage = 6;
+    optional DataManagerMessage dataManagerMessage = 7;
+    optional TopologyMessage topologyMessage = 8;
+    optional HeartBeatMessage heartBeatMessage = 9;
+    optional TopologyStatusMessage topologyStatusMessage = 10;
+}
