@@ -8,8 +8,6 @@ TaskOutputDB/
 out/
 *.iml
 *.DS_STORE
-raw-data/
 config.properties
-UI-config
 *~
 *.backup
