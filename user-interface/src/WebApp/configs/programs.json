@@ -1,0 +1,1 @@
+{"Builder": {"path": "/Builder.exe", "FILE_TYPES": "msg-1d", "OUT_TABLE_TYPE": "wc", "OUT_FILE_TYPE": "wc-frag"}, "Frag_Merger": {"path": "/Frag_Merger.exe", "FILE_TYPES": "wc-frag", "DELETE_ON_FINISH": "1", "OUT_TABLE_TYPE": "wc", "OUT_FILE_TYPE": "wc-1"}}

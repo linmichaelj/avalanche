@@ -4,13 +4,9 @@
 *.py~
 .gitignore~
 *~
-*.json
-*.xml
 .idea
 *.log
 *.save
-*.json
-*.xml
 *.swp
 
 

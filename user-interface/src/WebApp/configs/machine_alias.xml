@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<config>
+  <machine>
+    <alias>localhost</alias>
+    <ram_port>localhost</ram_port>
+    <ip_address>localhost</ip_address>
+    <file_port>localhost</file_port>
+    <db_port>localhost</db_port>
+  </machine>
+</config>
