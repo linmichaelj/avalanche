@@ -34,7 +34,6 @@ public class DataScheduler extends Observable implements Runnable {
 
     private synchronized void addBlockedRequest(DataTransferRequest request){
         if(blockedRequests.contains(request)) return;
-        System.out.println("Added Request for " + request.getTaskId()  + " to Blocked Requests");
         blockedRequests.add(request);
     }
 

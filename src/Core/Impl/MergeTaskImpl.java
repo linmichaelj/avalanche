@@ -113,7 +113,6 @@ public abstract class MergeTaskImpl implements MergeTask {
 
         else if ((message = MessageBuilderUtil.getMessageOfType(arg, Message.MessageType.DATA_HANDLER_MESSAGE)) != null){
             Message.DataHandlerMessage innerMessage = message.getDataHandlerMessage();
-            System.out.println("LOADING " + innerMessage);
             if(innerMessage.getType() == Message.DataHandlerMessage.Type.READ_RESPONSE && innerMessage.getTaskId().equals(id)){
                 output.addAll(innerMessage.getDataPayLoadList());
                 for(Message.DataPair dataPair: innerMessage.getMetaData().getDataPairList()){
@@ -134,14 +133,12 @@ public abstract class MergeTaskImpl implements MergeTask {
             } else if(innerMessage.getType() == Message.DataHandlerMessage.Type.READ_RESPONSE){
                 if(pauseFlag){
                     requestArrived = true;
-                    System.out.println("REQUEST ARRIVE FLAG");
                 }
                 else {
                     if (innerMessage.getDataPayLoadCount() == 0) {
                         readyDataSources.remove(innerMessage.getTaskId());
                         completeDataSources.add(innerMessage.getTaskId());
                         currentIndex = 0;
-                        System.out.println("ADD " + innerMessage.getTaskId() +  " to complete");
                         running = requestNextInput();
                     } else {
                         input = innerMessage.getDataPayLoadList();
@@ -188,7 +185,6 @@ public abstract class MergeTaskImpl implements MergeTask {
         while(running && readyDataSources.size() > 0 || (input != null && input.size() > 0)){
             if(input != null && input.size() > 0){
                 synchronized (output) {
-                    System.out.println("READING CHUNK OF SIZE " + input.size() + " FROM " + currentSource + " " + input);
                     output = userFunction(input, output);
                     currentIndex += input.size();
                     input = null;
@@ -201,14 +197,10 @@ public abstract class MergeTaskImpl implements MergeTask {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println("NO INPUT");
             }
-
-            System.out.println("LOOPING");
 
             if(pauseFlag) {
                 dataHandlerClient.sendMessage(MessageBuilderUtil.generateDataHandlerWriteMessage(id, output, generateMetaData(), false));
-                System.out.println("PAUSING");
                 output = new LinkedList<Message.DataPair>();
                 input = new LinkedList<Message.DataPair>();
 
@@ -237,7 +229,6 @@ public abstract class MergeTaskImpl implements MergeTask {
     }
 
     private boolean requestNextInput(){
-        System.out.println("PULLING FROM " + readyDataSources);
         String source = readyDataSources.peek();
         if(source != null) {
             dataHandlerClient.sendMessage(MessageBuilderUtil.generateDataHandlerReadMessage(source, currentIndex, currentIndex+MERGE_MAX_INPUT-1));

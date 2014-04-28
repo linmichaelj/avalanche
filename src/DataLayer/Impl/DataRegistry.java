@@ -65,7 +65,7 @@ public class DataRegistry {
             dataHandlerLocationLookup.put(taskId, dataHandlerLocations);
             taskInitLocationLookup.put(taskId, taskInitLocations);
         } else {
-            System.out.println("REGISTRY OUT OF SYNC");
+
         }
         saveSnapShot();
     }

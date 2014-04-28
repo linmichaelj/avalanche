@@ -3,6 +3,7 @@ package CommLayer;
 
 import CommLayer.Messages.AvalancheMessages.Message;
 import CommLayer.Messages.MessageBuilderUtil;
+import Util.ConfigProperties;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +20,7 @@ public class StreamThread extends Observable implements Runnable {
     private OutputStream outputStream;
     private boolean reading;
     private String ownerId;
-    private boolean debug = false;
+    private boolean debug;
 
     public StreamThread(Socket socket, String ownerId) throws IOException {
         this.socket = socket;
@@ -28,7 +29,10 @@ public class StreamThread extends Observable implements Runnable {
         outputStream = socket.getOutputStream();
         reading = true;
         this.ownerId = ownerId;
-        System.out.println("[" + ownerId + ": StreamThread]. Created");
+        debug = ConfigProperties.getProperty("DEBUG").equals("true");
+
+        if(debug)
+            System.out.println("[" + ownerId + ": StreamThread]. Created");
     }
 
     public void run(){
@@ -55,8 +59,8 @@ public class StreamThread extends Observable implements Runnable {
                 //e.printStackTrace();
             }
         }
-
-        System.out.println("[" + ownerId + " StreamThread]. Exiting");
+        if(debug)
+            System.out.println("[" + ownerId + " StreamThread]. Exiting");
         try {
             inputStream.close();
             socket.close();

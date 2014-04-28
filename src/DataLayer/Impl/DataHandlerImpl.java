@@ -77,7 +77,6 @@ public class DataHandlerImpl implements DataHandler {
     }
 
     public synchronized void writeOutput(List<Message.DataPair> output, String taskId, List<Message.DataPair> metaDataPairs){
-        System.out.println("writing to " + taskId);
         if(!keySpace.containsKey(taskId)){
             generateKey(taskId);
         }
@@ -102,7 +101,6 @@ public class DataHandlerImpl implements DataHandler {
     }
 
     public synchronized List<Message.DataPair> getOutput(String taskId, int minRange, int maxRange, Message.DataHandlerMessage.MetaData.Builder retrievedMetaData){
-        System.out.println("reading from " + taskId);
         if(!keySpace.containsKey(taskId)) return null;
         int cursor = 0;
         int keySpaceSize = 0;
@@ -110,7 +108,6 @@ public class DataHandlerImpl implements DataHandler {
 
         DBIterator iterator = db.iterator();
         iterator.seek(keySpace.get(taskId));
-        System.out.println("HERE1");
         //Process MetaData
         for(; iterator.hasNext(); iterator.next()){
             if(isData(iterator.peekNext().getKey())) break;
@@ -118,7 +115,6 @@ public class DataHandlerImpl implements DataHandler {
             if(retrievedMetaData != null){
                 Map.Entry<byte[], byte[]> s = iterator.peekNext();
                 String key = convertFromKeySpace(s.getKey(), taskId);
-                System.out.println("HERE2 " + key);
                 if(key.equals(SIZE_KEY)){
                     keySpaceSize = Integer.parseInt(new String(s.getValue()));
                 } else {
@@ -149,7 +145,6 @@ public class DataHandlerImpl implements DataHandler {
             if(cursor >= keySpaceSize || cursor > maxRange)
                 break;
 
-            System.out.println("HERE3 " + new String(convertFromKeySpace(iterator.peekNext().getKey(), taskId)));
             dataPairList.add(Message.DataPair.newBuilder().setValue(new String (iterator.peekNext().getValue())).setKey(new String(convertFromKeySpace(iterator.peekNext().getKey(), taskId))).build());
             cursor ++;
         }

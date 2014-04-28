@@ -34,7 +34,6 @@ public class DataHandlerService implements Observer {
         dataManagerClient = new CommClient("DataManagerClient", dmHost, dmPort);
         dataManagerClient.addInputObserver(this);
 
-        new HeartBeatGenerator(new CommClient("DH HBM", host, lsPort));
         new HeartBeatGenerator(new CommClient("DH HBM", dmHost, dmPort));
 
         server = new CommServer(ConfigProperties.getIntProperty("DH_PORT"), "DataHandlerServer");

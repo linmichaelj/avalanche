@@ -1,5 +1,7 @@
 package CommLayer;
 
+import Util.ConfigProperties;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.LinkedList;
@@ -9,11 +11,12 @@ import java.util.Observer;
  * Created by linmichaelj on 3/7/2014.
  */
 public class CommServer implements Runnable {
-    ServerSocket serverSocket;
-    LinkedList<Observer> inputObservers;
-    LinkedList<StreamThread> clientStreams;
-    boolean listening;
-    String id;
+    private ServerSocket serverSocket;
+    private LinkedList<Observer> inputObservers;
+    private LinkedList<StreamThread> clientStreams;
+    private boolean listening;
+    private String id;
+    private boolean debug;
 
     public CommServer(int port, String id) {
         inputObservers = new LinkedList<Observer>();
@@ -25,13 +28,16 @@ public class CommServer implements Runnable {
         }
         listening = true;
         this.id = id;
+        debug = ConfigProperties.getProperty("DEBUG").equals("true");
+
     }
 
     public void run(){
         while(listening){
             try {
                 StreamThread clientStream = new StreamThread(serverSocket.accept(), id);
-                System.out.println("[CommServer" + id + "] Received incoming connection");
+                if(debug)
+                    System.out.println("[CommServer" + id + "] Received incoming connection");
                 for(Observer o: inputObservers){
                     clientStream.addObserver(o);
                 }

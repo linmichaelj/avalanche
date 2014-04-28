@@ -45,7 +45,6 @@ public class CopyTaskImpl implements CopyTask {
 
     @Override
     public void update(Observable observable, Object o) {
-        System.out.println("[Task " + id + "]. was notified");
         Message message;
 
         if((message = MessageBuilderUtil.getMessageOfType(o, Message.MessageType.DATA_HANDLER_MESSAGE)) != null){

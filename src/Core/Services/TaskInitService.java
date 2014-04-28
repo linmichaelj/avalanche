@@ -2,7 +2,6 @@ package Core.Services;
 
 import CommLayer.CommClient;
 import CommLayer.CommServer;
-import CommLayer.HeartBeatGenerator;
 import CommLayer.Messages.AvalancheMessages.Message;
 import CommLayer.Messages.MessageBuilderUtil;
 import Core.Impl.CopyTaskImpl;
@@ -34,7 +33,6 @@ public class TaskInitService implements Observer {
     public TaskInitService() throws IOException {
         loadConfigProperties();
         server = new CommServer(tsPort, "TaskCommServer");
-        new HeartBeatGenerator(new CommClient("TaskInit HB", host, lsPort));
 
         server.addInputObserver(this);
         new Thread(server).start();

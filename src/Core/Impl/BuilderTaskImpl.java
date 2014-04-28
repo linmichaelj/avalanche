@@ -202,7 +202,6 @@ public abstract class BuilderTaskImpl <M,N> implements BuilderTask <M,N> {
                         }
                     }
                 }
-                System.out.println(id + " RECOVERED TO " + currentFile + ", " + currentIndex);
                 output.putAll(convertProtoBufToMap(innerMessage.getDataPayLoadList()));
                 pauseFlag = false;
                 changeState(Status.State.RUNNING);
@@ -218,8 +217,6 @@ public abstract class BuilderTaskImpl <M,N> implements BuilderTask <M,N> {
             List<Message.DataPair> metaData = generateMetaData();
             dataHandlerClient.sendMessage(MessageBuilderUtil.generateDataHandlerWriteMessage(id, convertMapToProtoBuf(output), metaData, !partialWrite));
         }
-        System.out.println(id + " SAVING AT " + currentFile + ", " + currentIndex);
-
     }
 
     private List<Message.DataPair> generateMetaData(){
