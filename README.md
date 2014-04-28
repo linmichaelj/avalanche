@@ -7,7 +7,7 @@ Flexible and fast batch processing for real-time data generating applications
 The fontend code is contained within the user-interface/Webapp repo. In this directory install the dependencies by using pip: pip install -r requirements.txt.  
 
 ### Java
-- Import the project into Intellij and import the following maven dependencies:
+Import the project into Intellij and import the following maven dependencies:
 - com.google.protobuf:protobuf-java:2.5.0
 - org.apache.commons:com.springsource.org.apache.commons.lang:2.6.0
 - org.fusesource.leveldbjni:leveldbjni-all:1.8
